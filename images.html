@@ -1,0 +1,209 @@
+<?php
+//image upload and insert home page
+ ?>
+ <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+ <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+ <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+ <!DOCTYPE html>
+ <html lang="en" dir="ltr">
+   <head>
+     <meta charset="utf-8">
+     <title>images select|upload|link</title>
+     <?php echo link_tag('themes/css/fontawesome/css/fontawesome.css');?>
+   	<?php echo link_tag('themes/css/fontawesome/css/all.css');?>
+     <?php get_style($style,'css/');?>
+   	 <?php get_script($script,'js/'); ?>
+     <style media="screen">
+     .image-counter{
+       display: none;
+       position: fixed;
+       left:0;
+       top:0;
+       right:0;
+       bottom:0;
+       width:100%;
+       height:100%;
+       background: rgba(0, 0, 0, 0.5);
+       z-index: 9999;
+       overflow: auto;
+     }
+     .image-counter .images,.images{
+       width:90%;
+       margin:auto;
+       background: #fff;
+     }
+     .image-counter .images img{
+       margin:5px;
+     }
+     .uploader{
+       background: rgba(255,255,255,0);
+       position:relative!important;
+       margin: auto;
+       top:-200px!important;
+       z-index: 2;
+       color: rgba(255,255,255,0);
+       border: none!important;
+       border: 3px solid #000;
+     }
+     .uploader input{
+       width: 600px;
+       height:200px;
+       opacity: 0;
+     }
+     .upload{
+       margin-top: 100px;
+       text-align: center;
+     }
+     </style>
+   </head>
+   <body>
+      <div class="card" style="width:90%;margin:auto;">
+        <br>
+        <div class="card-header">
+          <button class="btn tab-btn" id="selBtn">select image</button>
+          <button class="btn tab-btn" id="uplBtn"><i class="fa fa-upload"></i>upload image</button>
+          <button class="btn tab-btn" id="urlBtn"><i class="fa fa-globe"></i>url</button>
+            <button class="btn text-dark bg-light closeBtn" style="float:right;"><i class="fa fa-times"></i></button>
+        </div>
+        <br><hr>
+        <div class="card-body text-center" style="min-height:50%;">
+          <div id="select-window" class="images img-win">
+            <?php
+              echo "edit the php code to fetch images from directory or database";
+            //fetch images from directory
+/*------------------------------------------------------------------------*/
+              define('IMAGE_DIR','images/') //path to image dir
+              $images = scandir(IMAGE_DIR,1); //define its path
+/*-------------------------------------------------------------------------*/
+              foreach($images as $img){
+                $valid_ext = array('jpg','png');
+                $ext = explode('.',$img);
+                if (in_array(end($ext),$valid_ext)) {
+                  echo '<input type="text" class="img-url" value="images/'.$img.'" hidden>';
+                  echo '<img src="'.image_dir('images/').$img.'" height="100" width="100"/>';
+                }
+              }
+            ?>
+          </div>
+
+          <div id="upload-window" class="hidden img-win">
+             <form class="frm-upload" action="" method="post" enctype="multipart/form-data">
+                 <h1 class="text-center upload"><i class="fas fa-upload text-primary"> <br>upload an image</i></h1>
+                 <h1 class="uploader"><input type="file" name="image_file" class="file-input"></h1>
+             </form>
+               <input type="text" id="uploaded" class="input">
+               <div id="uploaded-img" class="text-danger"></div>
+          </div>
+          <div id="url-window" class="hidden img-win">
+            <p> url : <input type="url" class="input img-url" value="" placeholder="http://www.pagespool.com/media/default.jpg"></p><br>
+           <p>height :  <input type="text" class="input-inline" name="" value="300">
+           <select class="input-inline">
+             <option value="px" selected >px</option>
+           </select>
+         </p><br>
+            <p> width : <input type="text" name="" value="100">
+              <select class="input-inline width-unit">
+                <option value="%" selected>%</option>
+                <option value="px" selected >px</option>
+              </select>
+            </p><br>
+            <div class="img-selected"></div>
+          </div>
+        </div>
+        <div class="card-footer text-right">
+          <button class="btn btn-secondary closeBtn">cancel</button>
+          <button class="btn btn-primary insert">insert image</button>
+        </div>
+
+<!--         <?php // NOTE: image editor .. ?>  ///uncomment this if you want to use it in a div using php include
+        <div class="img-editor">
+          <div class="left-image card"></div>
+          <div class="right-details form card">
+            <div class="card-body">
+            <form>
+              <input type="text" class="img-title">
+              <input type="text" class="img-url">
+              <input type="text" class="img-height">
+                <select class="hu" name="">
+                  <option value="px" selected>px</option>
+                  <option value="%">%</option>
+                </select>
+              <input type="text" class="img-width">
+                <select class="wu" name="">
+                  <option value="px" selected>px</option>
+                  <option value="%">%</option>
+                </select>
+              <select class="img-align">
+                <option name="img-align" value="left" selected>left</option>
+                <option name="img-align" value="right">right</option>
+                <option name="img-align" value="none">none</option>
+              </select>
+              <input type="text" class="img-alt">
+              <input type="text" class="img-caption">
+            </form> -->
+            </div>
+<!--             <div class="card-footer">
+              <button class="btn btn-success cancel">cancel</button> &nbsp;
+              <button class="btn btn-success insert">inser image</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+   </body>
+   <script type="text/javascript">
+   $(function(){
+     
+    /*-------------------------------------------------------------------*/
+     var fileUploadUrl = "upload.html";/* change this variable value*/
+    /*-------------------------------------------------------------------*/
+       $('#selBtn').on('click',function(){
+         $('#select-window').removeClass('hidden');
+          // $('.img-win').not('.select-window').addClass('hidden');
+       })
+       $('#uplBtn').on('click',function(){
+         $('#upload-window').removeClass('hidden');
+         $('.img-win').not('#upload-window').addClass('hidden');
+       })
+       $('#urlBtn').on('click',function(){
+         $('#url-window').removeClass('hidden');
+        $('.img-win').not('#url-window').addClass('hidden');
+       })
+       $('.img-url').on('change',function(){
+         $('.img-selected').html('<img src="'+$(this).val()+'" height="200" width="300"/>');
+       })
+       $('.file-input').on('change',function(){
+         $(this).parents('.frm-upload').submit();
+       })
+       $('.frm-upload').on('submit',function(e){
+         // var that = $(this);
+         e.preventDefault();
+         alert('submit');
+         $.ajax({
+           url:fileUploadUrl, //url to call ajax request for image upload
+           data: new FormData(this),
+           method :"POST",
+           contentType:false,
+           cache :false,
+           processData :false,
+           beforeSend(){
+             $('.upload').html('<i class="far fa-spin"> uploading...</i>');
+             $('.file-input').attr('disabled','disabled');
+           },
+           success : function(data){
+             $('.upload').html('<i class="fas fa-upload text-primary"> <br>upload an image</i>');
+             $('.file-input').attr('disabled',false);
+             // $('#uploaded').val(data);
+             $('#uploaded-img').html(data);
+             //  $('#select-window').load(location.href +' #select-window');
+             // $('#select-window').removeClass('hidden');
+             // $('#upload-window').addClass('hidden');
+           }
+         });
+       });
+      $('.closeBtn').on('click',function(){
+       $('.img-counter').hide();
+       $('body').removeClass('body-blurr');
+     });
+     });
+   </script>
+ </html>
