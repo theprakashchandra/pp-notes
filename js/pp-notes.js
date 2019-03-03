@@ -15,7 +15,7 @@ var editor={
   editable_div     : "<iframe class='wysiwyg-area'/>",
 
   /* 3rd child info */
-  info_pannel      : "<div class='editor-info'><small>editing tool made for SoloTutes &copy; 2019 pagespool.com <br> v 0.0.00</small> </div>"
+  info_pannel      : "<div class='editor-info'><small> &copy; 2019 pagespool.com <br> v 0.0.00</small> </div>"
 }
 
 var dropdowns = [];
@@ -75,27 +75,12 @@ var editor_tools    = [];
 
 var placeholder_text = ' the WYSIWYG editor ';
 var img_wrapper={
-  img_inner       : "<div class='img-counter'><a class='float-right btn btn-warning counter-close'><i class='fas fa-times'></i></a><iframe src='media_gallery/image_counter'></iframe></div>",
+  img_inner       : "<div class='img-counter'><a class='float-right btn btn-warning counter-close'><i class='fas fa-times'></i></a><iframe src='images.html'></iframe></div>",
   img_editor      : "<div class='img-editor'></div>",
   left_image      : "<div class='left-image card'></div>",
   form_part       : "<div class='right-details'><div class='card-body form'><form></form></div></div>",
   inputs          : '<input type="text" class="img-title"><input type="text" class="img-url"><input type="text" class="img-height"><input type="text" class="img-width"><input type="text" class="img-alt"><input type="text" class="img-caption"><select class="img-align"><option name="img-align" value="left" selected>left</option><option name="img-align" value="right">right</option><option name="img-align" value="none">none</option></select>',
   buttons         : '<div class="card-footer text-right bg-light p-3"><a class="btn btn-warning cancel" type="reset">cancel</a> &nbsp;<a class="btn btn-success insert-image">insert image</a></div>'
-}
-var images=new Array();
-images[0]   = "images/google-earth-view-1774.jpg";
-images[1]   = "images/google-earth-view-1778.jpg";
-images[2]   = "images/google-earth-view-1836.jpg";
-// images[3]   = "https://images.pexels.com/photos/56866/garden-rose-red-pink-56866.jpeg?cs=srgb&dl=bloom-blossom-dew-56866.jpg&fm=jpg";
-// images[4]   = "https://images.pexels.com/photos/39517/rose-flower-blossom-bloom-39517.jpeg?cs=srgb&dl=bloom-blossom-flora-39517.jpg&fm=jpg";
-// images[5]   = "https://images.pexels.com/photos/63638/roses-flower-nature-macro-63638.jpeg?cs=srgb&dl=bloom-blossom-flora-63638.jpg&fm=jpg";
-// //images[6]   = "",
-//images[7]   = "",
-//images[8]   = ""
-
-var image='';
-for (var i = 0; i < images.length; i++) {
-  image += "<img src='"+images[i]+"' height='150' width='150' alt='sample image'/>";
 }
 
 // composer.js  + handler.js part
@@ -165,7 +150,6 @@ $(function(){ //jquery
   $('.editor .editor-wrapper .img-editor').append(img_wrapper.form_part);
   $('.editor .editor-wrapper .img-editor .form form').append(img_wrapper.inputs);
   $('.editor .editor-wrapper .img-editor').append(img_wrapper.buttons);
-    $('.img-counter .images').append(image);
   $('.img-counter').css('top',$('.editor-toolbar').height());
   $('.img-counter').css({'height':$('.editor-body-wrapper').height(),'width':$('.editor-body-wrapper').width()});
 
